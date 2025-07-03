@@ -1,1 +1,1 @@
-# dsitributed-ai-config
+# distributed-ai-config
