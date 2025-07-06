@@ -1,15 +1,21 @@
+server: 
+  port: 8080
+
 spring:
   application:
-    name: application
+    name: api-gateway
+
   cloud:
     loadbalancer:
       ribbon:
         enabled: false
+
     gateway:
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
+
       default-filters:
         - name: Retry
           args:
@@ -23,9 +29,27 @@ spring:
               maxBackoff: 100ms
               factor: 3
               baseadOnPreviousValue: true
-
-server: 
-  port: 8087 #?
+      routes:
+        - id: microservices1-route
+          uri: lb://MICROSERVICE1-THIRDPARTY-MCP
+          predicates:
+            - Path=/ms1/**
+          filters:
+            - StripPrefix=2
+        - id: microservices2-route
+          uri: lb://MICROSERVICE2-OLLAMA-MCP-INTERNAL
+          predicates:
+            - Path=/ms2/**
+          filters:
+            - StripPrefix=2
+        - id: microservices3-route
+          uri: lb://MICROSERVICE3-SERVERLESS-FUNCTION
+          predicates:
+            - Path=/ms3**
+          filters:
+            - StripPrefix=2
+    config:
+      import: "optional:configserver:http://localhost:8888"
 
 eureka:
   instance:

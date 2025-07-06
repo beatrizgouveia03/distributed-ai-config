@@ -1,0 +1,22 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: eureka-server-2
+
+  cloud:
+    config:
+      import: "optional:configserver:http://localhost:8888"
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    defaultZone: "http://localhost:8081/eureka/, http://localhost:8083/eureka/"
+
+management:
+  endpoint:
+    web:
+      exposure:
+        include: "*"

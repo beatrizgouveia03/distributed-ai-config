@@ -1,6 +1,6 @@
 spring:
   application:
-    name: microservices1-thirdparty-mcp
+    name: microservices2-ollama-mcp-internal
   config:
     import: "optional:configserver:"
   cloud:
@@ -29,10 +29,3 @@ management:
     health:
       circuit-breakers:
         enabled: true
-
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: "http://localhost:8761/eureka/"
