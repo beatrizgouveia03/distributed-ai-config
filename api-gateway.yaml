@@ -16,6 +16,13 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
+      routes:
+        - id: microservice-mcp_route
+          uri: lb://microservice-mcp
+          predicates:
+            - Path=/ms1/**
+          filters:
+            - StripPrefix=1
 
 management:
   endpoint:
