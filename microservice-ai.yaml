@@ -23,7 +23,7 @@ spring:
     mcp:
       client:
         toolcallback:
-          enabled: true
+          enabled: false
         sse:
           connections:
             server:
