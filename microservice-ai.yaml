@@ -8,13 +8,13 @@ spring:
   cloud:
     loadbalancer:
       ribbon:
-        enabled: true
+        enabled: false
 
 ai:
   model:
     chat: openai
   openai:
-    api-key: ${GOOGLE_API_KEY}
+    api-key: ${GEMINI_API_KEY}
     base-url: https://generative-language.googleapis.com/v1beta/openai
     chat:
       completions-path: /chat/completions
