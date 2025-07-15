@@ -10,24 +10,24 @@ spring:
       ribbon:
         enabled: false
 
-ai:
-  model:
-    chat: openai
-  openai:
-    api-key: ${GEMINI_API_KEY}
-    base-url: https://generative-language.googleapis.com/v1beta/openai
-    chat:
-      completions-path: /chat/completions
-      options:
-        model: gemini-2.0-flash
-  mcp:
-    client:
-      toolcallback:
-        enabled: true
-      sse:
-        connections:
-          server:
-            url: http://localhost:8081/
+  ai:
+    model:
+      chat: openai
+    openai:
+      api-key: ${GEMINI_API_KEY}
+      base-url: https://generative-language.googleapis.com/v1beta/openai
+      chat:
+        completions-path: /chat/completions
+        options:
+          model: gemini-2.0-flash
+    mcp:
+      client:
+        toolcallback:
+          enabled: true
+        sse:
+          connections:
+            server:
+              url: http://localhost:8081/
 
 management:
   health:
