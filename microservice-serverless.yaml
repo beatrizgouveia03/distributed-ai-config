@@ -6,27 +6,33 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
-resilience4j:
-  circuitbreaker:
-    instances:
-      mcpService:
-        registerHealthIndicator: true
-        slidingWindowType: COUNT_BASED
-        slidingWindowSize: 10
-        minimumNumberOfCalls: 5
-        permittedNumberOfCallsInHalfOpenState: 3
-        waitDurationInOpenState: 10000
-        failureRateThreshold: 50
-
 management:
+  health:
+    circuitbreakers:
+      enabled: true
   endpoints:
     web:
       exposure:
         include: "*"
   endpoint:
     health:
+      enabled: true
       show-details: always
       show-components: always
   metrics:
     tags:
       application: ${spring.application.name}
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+    instances:
+      microservice-serverless:
+        slidingWindowSize: 2
+        failureRateThreshold: 50
+        registerHealthIndicator: true
+        slidingWindowType: COUNT_BASED
+        waitDurationInOpenState: 10000
+        event-consumer-buffer-size: 10

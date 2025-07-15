@@ -17,14 +17,32 @@ spring:
           lower-case-service-id: true
 
 management:
+  health:
+    circuitbreakers:
+      enabled: true
   endpoints:
     web:
       exposure:
         include: "*"
   endpoint:
     health:
+      enabled: true
       show-details: always
       show-components: always
   metrics:
     tags:
       application: ${spring.application.name}
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+    instances:
+      api-gateway:
+        slidingWindowSize: 2
+        failureRateThreshold: 50
+        registerHealthIndicator: true
+        slidingWindowType: COUNT_BASED
+        waitDurationInOpenState: 10000
+        event-consumer-buffer-size: 10
