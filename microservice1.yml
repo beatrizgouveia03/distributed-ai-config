@@ -1,4 +1,0 @@
-# C:\Users\beatr\Desktop\distributed-ai-config\microservice1.yml
-message: Hello from Microservice1 loaded from Config Server!
-server:
-  port: 0 # Isso pode vir do Config Server ou do próprio app

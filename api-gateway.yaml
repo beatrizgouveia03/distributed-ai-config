@@ -28,7 +28,7 @@ management:
   endpoint:
    web:
     exposure:
-      include: '*'
+      include: "health,info,prometheus"
   metrics:
     tags:
-      application: api-gateway
+      application: ${spring.application.name}
