@@ -33,7 +33,11 @@ management:
   endpoints:
     web:
       exposure:
-        include: "health,info,prometheus" 
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
   metrics:
     tags:
       application: ${spring.application.name}
