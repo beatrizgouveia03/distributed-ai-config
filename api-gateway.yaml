@@ -17,10 +17,14 @@ spring:
           lower-case-service-id: true
 
 management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
   endpoint:
-   web:
-    exposure:
-      include: "health,info,prometheus"
+    health:
+      show-details: always
+      show-components: always
   metrics:
     tags:
       application: ${spring.application.name}
