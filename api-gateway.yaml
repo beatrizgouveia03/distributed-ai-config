@@ -34,6 +34,11 @@ management:
       application: ${spring.application.name}
 
 resilience4j:
+  bulkhead:
+    instances:
+      bulkheadapi-gateway:
+        maxWaitDuration: 2ms
+        maxConcurrentCalls: 20
   circuitbreaker:
     configs:
       default:
@@ -46,3 +51,9 @@ resilience4j:
         slidingWindowType: COUNT_BASED
         waitDurationInOpenState: 10000
         event-consumer-buffer-size: 10
+        recordExceptions:
+          - org.springframework.web.client.HttpServerErrorException
+          - java.io.IOException
+          - java.lang.IllegalStateException
+          - java.util.concurrent.TimeoutException
+          - org.springframework.web.client.ResourceAccessException
