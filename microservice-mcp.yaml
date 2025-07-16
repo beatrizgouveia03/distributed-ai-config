@@ -1,10 +1,25 @@
 server:
   port: 8081
 
+ai:
+    mcp:
+      server:
+        stdio: false
+        enabled: true
+        type: SYNC
+        name: mcp-server
+        version: 1.0.0
+        sse-endpoint: /sse
+        sse-message-endpoint: /mcp/messages
+
 eureka:
+  instance:
+    prefer-ip-address: true
   client:
+    register-with-eureka: true
+    fetch-registry: true
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: "http://peer1:8761/eureka/,http://peer2:8762/eureka/,http://peer3:8763/eureka/"
 
 management:
   health:
@@ -22,42 +37,3 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
-
-resilience4j:
-  retry:
-      instances:
-        retrymicroservice-mcp:
-          maxAttempts: 5
-          waitDuration: 10000
-          intervalFunction:
-            type: exponencial
-            exponential-backoff-multiplier: 2
-            max-interval: 2000ms
-          retry-exceptions:
-            - java.util.concurrent.TimeoutException
-            - java.net.ConnectException
-  bulkhead:
-    instances:
-      bulkheadmicroservice-mcp:
-        maxWaitDuration: 2ms
-        maxConcurrentCalls: 20
-  circuitbreaker:
-    configs:
-      default:
-        registerHealthIndicator: true
-    instances:
-      microservice-mcp:
-        slidingWindowSize: 2
-        failureRateThreshold: 50
-        registerHealthIndicator: true
-        ringBufferSizeInCloseState: 5
-        slidingWindowType: COUNT_BASED
-        waitDurationInOpenState: 10000
-        event-consumer-buffer-size: 10
-        ringBufferSizeInHalfOpenState: 5
-        recordExceptions:
-          - org.springframework.web.client.HttpServerErrorException
-          - java.io.IOException
-          - java.lang.IllegalStateException
-          - java.util.concurrent.TimeoutException
-          - org.springframework.web.client.ResourceAccessException

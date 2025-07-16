@@ -4,12 +4,10 @@ server:
 spring:
   application:
     name: microservice-ai
-
   cloud:
     loadbalancer:
       ribbon:
         enabled: false
-
   ai:
     model:
       chat: openai
@@ -22,66 +20,25 @@ spring:
           model: gemini-2.0-flash
     mcp:
       client:
-        enabled: false
         toolcallback:
-          enabled: false
+          enabled: true
         sse:
           connections:
             server:
-              url: http://localhost:8081
-
+              url: "http://localhost:8081"
 management:
-  health:
-    circuitbreakers:
-      enabled: true
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: prometheus,health,info
   endpoint:
     health:
-      enabled: true
       show-details: always
-      show-components: always
-  metrics:
-    tags:
-      application: ${spring.application.name}
-
-#resilience4j:
-#  retry:
-#    instances:
-#      retrymicroservice-ai:
-#        maxAttempts: 5
-#        waitDuration: 10000
-#        intervalFunction:
-#          type: exponencial
-#          exponential-backoff-multiplier: 2
-#          max-interval: 2000ms
-#        retry-exceptions:
-#          - java.util.concurrent.TimeoutException
-#          - java.net.ConnectException
-#  bulkhead:
-#    instances:
-#      bulkheadmicroservice-ai:
-#        maxWaitDuration: 2ms
-#        maxConcurrentCalls: 20
-#  circuitbreaker:
-#    configs:
-#      default:
-#        registerHealthIndicator: true
-#    instances:
-#      microservice-ai:
-#        slidingWindowSize: 2
-#        failureRateThreshold: 50
-#        registerHealthIndicator: true
-#        ringBufferSizeInCloseState: 5
-#        slidingWindowType: COUNT_BASED
-#        waitDurationInOpenState: 10000
-#        event-consumer-buffer-size: 10
-#        ringBufferSizeInHalfOpenState: 5
-#        recordExceptions:
-#          - org.springframework.web.client.HttpServerErrorException
-#          - java.io.IOException
-#          - java.lang.IllegalStateException
-#          - java.util.concurrent.TimeoutException
-#          - org.springframework.web.client.ResourceAccessException
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: "http://peer1:8761/eureka/,http://peer2:8762/eureka/,http://peer3:8763/eureka/"
