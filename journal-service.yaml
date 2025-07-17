@@ -34,18 +34,21 @@ eureka:
       defaultZone: "http://peer1:8761/eureka/,http://peer2:8762/eureka/,http://peer3:8763/eureka/"
 
 management:
-  endpoints:
-    web:
-      exposure:
-        include: prometheus,health,info
-  endpoint:
-    health:
-      show-details: always
-      show-components: always
-      enabled: true
   health:
     circuitbreakers:
       enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      access: true
+      show-details: always
+      show-components: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 resilience4j:
   circuitbreaker:

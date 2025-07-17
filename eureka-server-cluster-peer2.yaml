@@ -9,3 +9,19 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://peer1:8761/eureka/,http://peer3:8763/eureka/
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      access: true
+      show-details: always
+      show-components: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
