@@ -16,21 +16,7 @@ spring:
           enabled: true
           lower-case-service-id: true
 
-management:
-  health:
-    circuitbreakers:
-      enabled: true
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
-      show-components: always
-  metrics:
-    tags:
-      application: ${spring.application.name}
+
 
 resilience4j:
   bulkhead:
