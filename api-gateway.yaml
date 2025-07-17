@@ -26,7 +26,6 @@ management:
         include: "*"
   endpoint:
     health:
-      access: true
       show-details: always
       show-components: always
   metrics:

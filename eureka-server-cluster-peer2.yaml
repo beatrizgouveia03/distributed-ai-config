@@ -9,6 +9,7 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://peer1:8761/eureka/,http://peer3:8763/eureka/
+
 management:
   health:
     circuitbreakers:
@@ -19,7 +20,6 @@ management:
         include: "*"
   endpoint:
     health:
-      access: true
       show-details: always
       show-components: always
   metrics:
